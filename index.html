@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peresmian Fasilitas Kamar Mandi TK Hang Tuah 2 - STTAL</title>
+    <title>Peresmian Fasilitas Kamar Mandi TK Hang Tuah 2 </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -107,8 +107,20 @@
 
             </div>
 
+            <!-- OVERLAY PESAN TERIMA KASIH & PERESMIAN (MUNCUL PAS VIDEO RAMPUNG DAN DIKUNCI) -->
+            <div id="thankYouOverlay" class="absolute inset-0 bg-navy-950/95 backdrop-blur-md transition-opacity duration-700 z-30 flex flex-col justify-center items-center gap-6 px-6 opacity-0 pointer-events-none">
+                <div class="bg-navy-900/95 border-2 border-gold-400 max-w-2xl px-8 py-8 rounded-2xl shadow-[0_0_40px_rgba(245,158,11,0.5)] text-center animate-pulse">
+                    <h2 class="font-tech text-2xl sm:text-4xl md:text-5xl text-gold-400 tracking-[0.2em] uppercase font-black mb-4">
+                        TERIMA KASIH
+                    </h2>
+                    <p class="font-tech text-xs sm:text-sm md:text-base text-cyan-200 tracking-wider leading-relaxed uppercase">
+                        Selamat atas peresmian toilet bersih guru & murid TK Hang Tuah 2 Surabaya
+                    </p>
+                </div>
+            </div>
+
             <!-- TOMBOL IKON FULLSCREEN KECIL DI POJOK KANAN BAWAH -->
-            <button onclick="event.stopPropagation(); toggleFullscreen();" class="absolute bottom-4 right-4 z-30 p-2.5 rounded-lg bg-navy-900/80 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500 hover:text-navy-950 transition-all shadow-lg backdrop-blur-sm" title="Layar Penuh">
+            <button onclick="event.stopPropagation(); toggleFullscreen();" class="absolute bottom-4 right-4 z-40 p-2.5 rounded-lg bg-navy-900/80 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500 hover:text-navy-950 transition-all shadow-lg backdrop-blur-sm" title="Layar Penuh">
                 <i data-lucide="maximize" class="w-5 h-5"></i>
             </button>
 
@@ -126,9 +138,16 @@
 
         const video = document.getElementById('ceremonyVideo');
         const touchIndicator = document.getElementById('touchIndicator');
+        const thankYouOverlay = document.getElementById('thankYouOverlay');
+        let hasPlayed = false; // Penanda lek video wis tau diputer
 
         function togglePlayVideo() {
+            // Lek video wis tau diputer, ora bakal iso diputer maneh (kudu refresh)
+            if (hasPlayed) return;
+
             if (video.paused) {
+                hasPlayed = true; // Kunci supaya ora iso diputer ulang
+
                 // Hilangkan indikator tangan secara halus saat disentuh
                 touchIndicator.style.opacity = '0';
                 setTimeout(() => {
@@ -141,9 +160,12 @@
             }
         }
 
+        // Pas video rampung, tampilkan ucapan terima kasih secara permanen
         video.addEventListener('ended', () => {
-            video.currentTime = 0;
-            video.pause();
+            thankYouOverlay.style.display = 'flex';
+            setTimeout(() => {
+                thankYouOverlay.style.opacity = '1';
+            }, 50);
         });
 
         function toggleFullscreen() {
@@ -163,4 +185,5 @@
         });
     </script>
 </body>
-</html>
+        </html>
+        
